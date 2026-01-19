@@ -98,7 +98,10 @@ class CosmicTimestampAPI:
 import os
 template_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'templates'))
 app = Flask(__name__, template_folder=template_dir)
-api = CosmicTimestampAPI('output/frb_fingerprints_enhanced.csv')
+
+# Get absolute path to CSV file for production
+csv_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'output', 'frb_fingerprints_enhanced.csv'))
+api = CosmicTimestampAPI(csv_path)
 
 @app.route('/')
 def home():
@@ -145,6 +148,15 @@ if __name__ == '__main__':
     print("🌌 COSMIC TIMESTAMP SYSTEM - WEB INTERFACE")
     print("="*70)
     print("\n✓ Server starting...")
-    print("✓ Open your browser to: http://localhost:5000")
+    
+    # Production configuration (Render, Heroku, etc.)
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('FLASK_ENV') == 'development'
+    
+    if debug:
+        print("✓ Open your browser to: http://localhost:5000")
+    else:
+        print(f"✓ Server running on port {port}")
+    
     print("\n")
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', port=port, debug=debug)
