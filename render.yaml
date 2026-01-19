@@ -3,8 +3,8 @@ services:
     name: cosmic-timestamp-system
     env: python
     rootDirectory: cosmic-timestamp-system
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 wsgi:app"
+    buildCommand: pip install -r requirements.txt
+    startCommand: ./start.sh
     envVars:
       - key: PYTHON_VERSION
-        value: 3.10.0
+        value: "3.10"

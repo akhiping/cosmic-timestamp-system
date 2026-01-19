@@ -1,0 +1,34 @@
+========================================
+RENDER DASHBOARD MANUAL CONFIGURATION
+========================================
+
+Since Render isn't picking up render.yaml, configure these settings manually in the Render dashboard:
+
+1. Go to your service settings: https://dashboard.render.com
+
+2. Click on your "cosmic-timestamp-system" service
+
+3. Go to "Settings" tab
+
+4. Update these fields:
+
+   ROOT DIRECTORY:
+   cosmic-timestamp-system
+
+   BUILD COMMAND:
+   pip install -r requirements.txt
+
+   START COMMAND:
+   gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 wsgi:app
+
+   PYTHON VERSION:
+   3.10
+
+5. Click "Save Changes"
+
+6. Click "Manual Deploy" → "Deploy latest commit"
+
+========================================
+
+That's it! Your site should now deploy successfully.
+
