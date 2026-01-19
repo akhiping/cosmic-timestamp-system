@@ -358,7 +358,7 @@ MIT License - see LICENSE file for details
 If you use this system in research, please cite:
 ```bibtex
 @software{cosmic_timestamp_2026,
-  author = {Akhil Pingali},
+  author = {Akhila Pingali},
   title = {Cosmic Timestamp System: FRB-Verified Unforgeable Timestamps},
   year = {2026},
   url = {https://github.com/yourusername/cosmic-timestamp-system}
