@@ -388,14 +388,6 @@ And the CHIME/FRB Catalog:
 
 ---
 
-## Contact
-
-**Akhil Pingali**  
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- Twitter: [@yourhandle](https://twitter.com/yourhandle)
-
----
 
 **"Timestamps verified by the universe itself."** 🌌
 
