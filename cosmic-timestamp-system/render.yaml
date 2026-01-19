@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: cosmic-timestamp-system
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python src/04_build_web_demo.py"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
