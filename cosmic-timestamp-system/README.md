@@ -20,7 +20,7 @@ Instead of trusting a central authority for timestamps, this system leverages co
 
 ## 🚀 Live Demo
 
-**[Try it here](#)** *(add your deployed URL)*
+**[Try it here](#)** 
 
 Or run locally:
 ```bash
@@ -401,6 +401,3 @@ And the CHIME/FRB Catalog:
 ---
 
 *Built with curiosity, cryptography, and cosmic explosions.*
-```
-
----
