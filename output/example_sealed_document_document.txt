@@ -1,0 +1,13 @@
+
+    RESEARCH NOTE - CONFIDENTIAL
+    
+    Date: January 19, 2026
+    Author: Akhila Pingali
+    
+    Discovery: Novel method for using Fast Radio Bursts as
+    cryptographic timestamps. This document proves I conceived
+    this idea before [date of FRB used for sealing].
+    
+    Key insight: FRBs are unpredictable cosmic events that can
+    serve as unforgeable temporal anchors.
+    

@@ -1,0 +1,12 @@
+{
+  "document_hash": "c7959a1e0a501df09ca79f23e3b1e62d653fad036c08152237a7f1e7c20554fa",
+  "frb_name": "FRB20180725A",
+  "frb_fingerprint": "6b8b15267ec67ecfcc6fcfeaa9e8b8c88ec45accc85fc0f8e2c8c9081cb04770",
+  "frb_timestamp": "2018-07-25T17:59:42.996990",
+  "frb_dm": 715.8093,
+  "frb_ra": 93.42,
+  "frb_dec": 67.07,
+  "sealed_at_utc": "2026-01-19T06:42:23.033307",
+  "seal_version": "1.0",
+  "signature": "add10e8de422cb6e2758b76e5c3670999dc9ee86acaab32fcb1d0fab78c67d61"
+}

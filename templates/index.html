@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Timestamp System - FRB Verified Timestamps</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Monaco', 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%);
+            color: #00ff88;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid #00ff88;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px #00ff88;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00ff88;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #00ff88;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            background: #0a0a1a;
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            padding: 15px;
+            font-family: 'Monaco', monospace;
+            font-size: 14px;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        
+        select {
+            width: 100%;
+            padding: 15px;
+            background: #0a0a1a;
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            font-family: 'Monaco', monospace;
+            font-size: 14px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        button {
+            background: #00ff88;
+            color: #0a0a1a;
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Monaco', monospace;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #00cc66;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ff88;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .result.show { display: block; }
+        
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 12px;
+        }
+        
+        .frb-info {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        .valid {
+            color: #00ff88;
+            font-weight: bold;
+        }
+        
+        .invalid {
+            color: #ff4444;
+            font-weight: bold;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #00ff88;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌌 COSMIC TIMESTAMP SYSTEM</h1>
+            <p class="subtitle">Unforgeable Timestamps Verified by Fast Radio Bursts</p>
+            <p class="subtitle" style="margin-top: 10px; font-size: 0.9em;">
+                Using cosmic events from billions of light-years away
+            </p>
+        </header>
+
+        <!-- SEAL DOCUMENT SECTION -->
+        <div class="section">
+            <h2>📝 Seal a Document</h2>
+            <p style="color: #888; margin-bottom: 20px;">
+                Create an unforgeable timestamp by sealing your document with a Fast Radio Burst.
+            </p>
+            
+            <textarea id="sealText" placeholder="Enter your document text here...
+
+Example:
+This is my research breakthrough dated January 19, 2026.
+This seal proves this document existed after the FRB event."></textarea>
+            
+            <select id="frbSelect">
+                <option value="">Loading FRBs...</option>
+            </select>
+            
+            <div class="frb-info" id="frbInfo"></div>
+            
+            <button onclick="sealDocument()">🔐 SEAL DOCUMENT</button>
+            
+            <div class="result" id="sealResult">
+                <h3>✅ Document Sealed Successfully!</h3>
+                <pre id="sealOutput"></pre>
+            </div>
+        </div>
+
+        <!-- VERIFY SEAL SECTION -->
+        <div class="section">
+            <h2>✓ Verify a Seal</h2>
+            <p style="color: #888; margin-bottom: 20px;">
+                Verify that a document's cosmic seal is valid and hasn't been tampered with.
+            </p>
+            
+            <label style="color: #888;">Document Text:</label>
+            <textarea id="verifyText" placeholder="Paste the original document text..."></textarea>
+            
+            <label style="color: #888; margin-top: 15px; display: block;">Seal (JSON):</label>
+            <textarea id="verifySeal" placeholder='Paste the seal JSON here...
+Example: {"document_hash": "...", "frb_name": "...", ...}'></textarea>
+            
+            <button onclick="verifyDocument()">🔍 VERIFY SEAL</button>
+            
+            <div class="result" id="verifyResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let frbs = [];
+
+        // Load available FRBs
+        async function loadFRBs() {
+            try {
+                const response = await fetch('/api/frbs');
+                frbs = await response.json();
+                
+                const select = document.getElementById('frbSelect');
+                select.innerHTML = '<option value="">Select an FRB to seal with...</option>';
+                
+                frbs.forEach(frb => {
+                    const option = document.createElement('option');
+                    option.value = frb.name;
+                    option.textContent = `${frb.name} - ${frb.timestamp} (${frb.distance_estimate})`;
+                    select.appendChild(option);
+                });
+                
+                select.addEventListener('change', updateFRBInfo);
+            } catch (error) {
+                console.error('Error loading FRBs:', error);
+            }
+        }
+
+        function updateFRBInfo() {
+            const select = document.getElementById('frbSelect');
+            const info = document.getElementById('frbInfo');
+            const selectedFRB = frbs.find(f => f.name === select.value);
+            
+            if (selectedFRB) {
+                info.innerHTML = `
+                    <strong>FRB Details:</strong><br>
+                    Detected: ${selectedFRB.timestamp}<br>
+                    Dispersion Measure: ${selectedFRB.dm} pc/cm³<br>
+                    Estimated Distance: ${selectedFRB.distance_estimate}
+                `;
+            } else {
+                info.innerHTML = '';
+            }
+        }
+
+        async function sealDocument() {
+            const text = document.getElementById('sealText').value;
+            const frbName = document.getElementById('frbSelect').value;
+            
+            if (!text || !frbName) {
+                alert('Please enter document text and select an FRB');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/seal', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ text, frb_name: frbName })
+                });
+                
+                const result = await response.json();
+                
+                document.getElementById('sealOutput').textContent = JSON.stringify(result, null, 2);
+                document.getElementById('sealResult').classList.add('show');
+            } catch (error) {
+                alert('Error sealing document: ' + error.message);
+            }
+        }
+
+        async function verifyDocument() {
+            const text = document.getElementById('verifyText').value;
+            const seal = document.getElementById('verifySeal').value;
+            
+            if (!text || !seal) {
+                alert('Please enter both document text and seal');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/verify', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ text, seal })
+                });
+                
+                const result = await response.json();
+                const resultDiv = document.getElementById('verifyResult');
+                
+                if (result.valid) {
+                    resultDiv.innerHTML = `
+                        <h3 class="valid">✅ SEAL IS VALID</h3>
+                        <p>${result.message}</p>
+                        <div style="margin-top: 15px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 5px;">
+                            <strong>FRB Details:</strong><br>
+                            Name: ${result.frb_details.name}<br>
+                            Timestamp: ${result.frb_details.timestamp}<br>
+                            DM: ${result.frb_details.dm} pc/cm³<br>
+                            Distance: ${result.frb_details.distance}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h3 class="invalid">❌ SEAL IS INVALID</h3>
+                        <p>${result.message}</p>
+                    `;
+                }
+                
+                resultDiv.classList.add('show');
+            } catch (error) {
+                alert('Error verifying seal: ' + error.message);
+            }
+        }
+
+        // Load FRBs when page loads
+        loadFRBs();
+    </script>
+</body>
+</html>

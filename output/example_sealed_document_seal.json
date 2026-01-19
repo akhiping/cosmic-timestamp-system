@@ -1,0 +1,10 @@
+{
+  "document_hash": "7ca7b1e69df81d58fef5bb1a2363acb26eebdb75a68fb5c395ced6800c2b3d28",
+  "frb_name": "FRB20180725A",
+  "frb_fingerprint": "0d0b7f12677d7040aa03f6711371473937febff19c425f84dd324896af77e1bf",
+  "frb_timestamp": "Unknown",
+  "frb_dm": 0.0,
+  "sealed_at_utc": "2026-01-19T06:38:37.627439",
+  "seal_version": "1.0",
+  "signature": "2647bf2430915ca12cf88891441ee8bc286ace2b20383eb492ccb20c2c4f0b0f"
+}
