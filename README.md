@@ -2,7 +2,7 @@
 
 **Unforgeable Timestamps Verified by Fast Radio Bursts from Across the Universe**
 
-![Cosmic Timestamp System](/home/akhiping/Documents/Mantaray/cosmic-timestamp-system/screenshots/cosmic-timestamp-hero.png)
+![Cosmic Timestamp System](cosmic-timestamp-system/screenshots/cosmic-timestamp-hero.png)
 
 ## What is this?
 
