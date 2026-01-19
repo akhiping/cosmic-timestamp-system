@@ -10,7 +10,7 @@ cd /home/akhiping/Documents/Mantaray
 git add .
 
 # 3. Commit
-git commit -m "Ready for Render deployment - Flask app configured for production"
+git commit -m "Fix Render deployment - move render.yaml to root"
 
 # 4. Push to GitHub
 git push origin main
