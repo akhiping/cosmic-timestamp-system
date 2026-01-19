@@ -1,15 +1,56 @@
 import json
+import sys
+import os
+
+# Add parent directory to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from src.timestamp_system import seal_document
 
 def handler(request):
-    body = json.loads(request["body"])
-    text = body["text"]
-    frb_name = body["frb_name"]
+    """Vercel serverless function handler"""
+    try:
+        # Parse request body
+        body = json.loads(request.get("body", "{}"))
+        text = body.get("text", "")
+        frb_name = body.get("frb_name", "")
 
-    result = seal_document(text, frb_name)
+        if not text or not frb_name:
+            return {
+                "statusCode": 400,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                "body": json.dumps({"error": "Missing text or FRB name"})
+            }
 
-    return {
-        "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
-        "body": json.dumps(result)
-    }
+        result = seal_document(text, frb_name)
+
+        if result is None:
+            return {
+                "statusCode": 404,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Origin": "*"
+                },
+                "body": json.dumps({"error": "FRB not found"})
+            }
+
+        return {
+            "statusCode": 200,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            "body": json.dumps(result)
+        }
+    except Exception as e:
+        return {
+            "statusCode": 500,
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            "body": json.dumps({"error": str(e)})
+        }
