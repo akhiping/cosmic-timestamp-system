@@ -1,4 +1,6 @@
-flask
-pandas
+# flask
+# pandas
 numpy
 cryptography
+pandas==2.1.4
+flask==3.0.0
